@@ -1,23 +1,34 @@
+body{
+    height: 100vh;
+}
 li{
     list-style: none;
 }
+.inputTag{
+    padding: 0 10px;
+    width: 1260px;
+    height: 250px;
+}
 .keyboard {
     width: 1280px;
-    height: 100vh;
+
     margin: 0 auto;
-    padding: 200px 0;
+    padding: 0px 0;
 }
 
 .ulTag {
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
-    gap: 20px 30px;
+    gap: 25px 15px;
 }
 .liTag {
     border: solid 1px;
-    min-width: 25px;
+    min-width: 45px;
     width: fit-content;
-    height: 25px;
-    padding: 5px;
+    height: 45px;
+    padding: 14px 5px;
+    text-align: center;
+    font-size: 26px;
+
 }

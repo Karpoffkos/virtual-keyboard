@@ -830,7 +830,7 @@ const dataList = [
   ];
 
 
-
+alert(`Приветствую! Если не сложно, очень прошу сделать ревью через пару дней. Не было возможности приступить к заданию! Благодарю`)
 function createKeyboard(arr){
     const keyboard = document.createElement('section')
     keyboard.classList.add(listCSS.KEYBOARD);
