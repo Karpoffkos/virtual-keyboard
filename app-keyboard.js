@@ -2,8 +2,10 @@ const listCSS = {
     TEXT: "text-area",
     KEYBOARD: "keyboard",
     FORM: "form",
-    SECTION: "section",
-    LI: "li",
+    MAIN: "main",
+    UL: "ulTag",
+    LI: "liTag",
+    INPUT: "inputTag",
 }
 const dataList = [
     {
@@ -830,22 +832,27 @@ const dataList = [
 
 
 function createKeyboard(arr){
-
     const keyboard = document.createElement('section')
     keyboard.classList.add(listCSS.KEYBOARD);
 
     const formTag = createElement('form', listCSS.FORM);
-    formTag.append(keyboard);
+    const textArea = createElement('input', listCSS.INPUT);
+    textArea.setAttribute('type', 'text');
+    formTag.append(textArea);
+    keyboard.append(formTag);
 
-    const sectionTag = createElement('section', listCSS.SECTION);
-    sectionTag.append(keyboard);
+    const mainTag = createElement('main', listCSS.MAIN);
+    keyboard.append(mainTag);
 
-    for (let i = 0; i < arr.lengh; i++){
-        const li = document.createElement('li');
-        li.classList.add(listCSS.LI)
-        li.classList.add(arr[i].code)
-        li.textContent = arr[i].en.keyShiftTrue
-        li.append(section)
+    const ulTag = createElement('ul', listCSS.UL);
+    mainTag.append(ulTag);
+
+    for (let i = 0; i < arr.length; i++){
+        const liTag = document.createElement('li');
+        liTag.classList.add(listCSS.LI);
+        liTag.classList.add(arr[i].code);
+        liTag.textContent = arr[i].en.keyShiftFalse;
+        ulTag.append(liTag);
     }
 
     return keyboard;
