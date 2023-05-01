@@ -851,7 +851,7 @@ function createKeyboard(arr){
         const liTag = document.createElement('li');
         liTag.classList.add(listCSS.LI);
         liTag.classList.add(arr[i].code);
-        liTag.textContent = arr[i].en.keyShiftTrue;
+        liTag.textContent = arr[i].en.keyShiftFalse;
         ulTag.append(liTag);
     }
 

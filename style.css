@@ -1,0 +1,23 @@
+li{
+    list-style: none;
+}
+.keyboard {
+    width: 1280px;
+    height: 100vh;
+    margin: 0 auto;
+    padding: 200px 0;
+}
+
+.ulTag {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 20px 30px;
+}
+.liTag {
+    border: solid 1px;
+    min-width: 25px;
+    width: fit-content;
+    height: 25px;
+    padding: 5px;
+}
