@@ -6,6 +6,9 @@ const listCSS = {
     UL: "ulTag",
     LI: "liTag",
     INPUT: "inputTag",
+    KEYBOTTON: "keybotton",
+    GRAY: "gray",
+    DIVDSCR: "divSescription",
 }
 const dataList = [
     {
@@ -373,6 +376,19 @@ const dataList = [
       rowType: "letterRow1",
     },
     {
+      code: "Delete",
+      ru: {
+        keyShiftTrue: "DEL",
+        keyShiftFalse: "DEL",
+      },
+      en: {
+        keyShiftTrue: "DEL",
+        keyShiftFalse: "DEL",
+      },
+      typeBtn: "",
+      rowType: "",
+    },
+    {
       code: "CapsLock",
       ru: {
         keyShiftTrue: "CapsLock",
@@ -531,12 +547,12 @@ const dataList = [
     {
       code: "Enter",
       ru: {
-        keyShiftTrue: "Enter",
-        keyShiftFalse: "Enter",
+        keyShiftTrue: "ENTER",
+        keyShiftFalse: "ENTER",
       },
       en: {
-        keyShiftTrue: "Enter",
-        keyShiftFalse: "Enter",
+        keyShiftTrue: "ENTER",
+        keyShiftFalse: "ENTER",
       },
       typeBtn: "controlBtn",
       rowType: "letterRow2",
@@ -553,6 +569,19 @@ const dataList = [
       },
       typeBtn: "controlBtn",
       rowType: "letterRow3",
+    },
+    {
+      code: "Backslash",
+      ru: {
+        keyShiftTrue: "/",
+        keyShiftFalse: "\\",
+      },
+      en: {
+        keyShiftTrue: "",
+        keyShiftFalse: "\\",
+      },
+      typeBtn: "inputBtn",
+      rowType: "letterRow1",
     },
     {
       code: "KeyZ",
@@ -685,6 +714,19 @@ const dataList = [
       rowType: "letterRow3",
     },
     {
+      code: "ArrowUp",
+      ru: {
+        keyShiftTrue: "↑",
+        keyShiftFalse: "↑",
+      },
+      en: {
+        keyShiftTrue: "↑",
+        keyShiftFalse: "↑",
+      },
+      typeBtn: "controlBtn",
+      rowType: "controlRow",
+    },
+    {
       code: "ShiftRight",
       ru: {
         keyShiftTrue: "Shift",
@@ -711,14 +753,14 @@ const dataList = [
       rowType: "controlRow",
     },
     {
-      code: "MetaLeft",
+      code: "Win",
       ru: {
-        keyShiftTrue: "Meta",
-        keyShiftFalse: "Meta",
+        keyShiftTrue: "Win",
+        keyShiftFalse: "Win",
       },
       en: {
-        keyShiftTrue: "Meta",
-        keyShiftFalse: "Meta",
+        keyShiftTrue: "Win",
+        keyShiftFalse: "Win",
       },
       typeBtn: "controlBtn",
       rowType: "controlRow",
@@ -789,19 +831,6 @@ const dataList = [
       rowType: "controlRow",
     },
     {
-      code: "ArrowUp",
-      ru: {
-        keyShiftTrue: "↑",
-        keyShiftFalse: "↑",
-      },
-      en: {
-        keyShiftTrue: "↑",
-        keyShiftFalse: "↑",
-      },
-      typeBtn: "controlBtn",
-      rowType: "controlRow",
-    },
-    {
       code: "ArrowDown",
       ru: {
         keyShiftTrue: "↓",
@@ -828,7 +857,9 @@ const dataList = [
       rowType: "controlRow",
     },
   ];
-
+const specialKeyBoard = ["Backquote", "Backspace", "Tab", "Delete", "CapsLock", "Enter",
+    "ShiftLeft", "ShiftRight", "ArrowUp", "ArrowLeft", "ArrowDown", "ArrowRight", "ControlLeft", "ControlRight",
+    "Win", "AltLeft", "AltRight"];
 
 alert(`Приветствую! Если не сложно, очень прошу сделать ревью через пару дней. Не было возможности приступить к заданию! Благодарю`)
 function createKeyboard(arr){
@@ -845,15 +876,32 @@ function createKeyboard(arr){
     keyboard.append(mainTag);
 
     const ulTag = createElement('ul', listCSS.UL);
+    const divSescription = createElement('div', listCSS.DIVDSCR);
+    divSescription.textContent = "Переключение языка: ctrl + alt (Windows)";
+
     mainTag.append(ulTag);
+    mainTag.append(divSescription);
 
     for (let i = 0; i < arr.length; i++){
         const liTag = document.createElement('li');
         liTag.classList.add(listCSS.LI);
-        liTag.classList.add(arr[i].code);
+        liTag.classList.add(arr[i].code.toLowerCase().slice(0, 1)+ arr[i].code.slice(1) );
         liTag.textContent = arr[i].en.keyShiftFalse;
+        const keybotton = document.createElement('div');
+        keybotton.classList.add(listCSS.KEYBOTTON);
+        if(specialKeyBoard.includes(arr[i].code)){
+          liTag.classList.add(listCSS.GRAY);
+        }
+        if(i < 13){
+         keybotton.textContent = arr[i].en.keyShiftTrue;
+        } else if (arr[i].code == "Backslash"){
+          keybotton.textContent = arr[i].en.keyShiftTrue;
+        }
+
+        liTag.append(keybotton);
         ulTag.append(liTag);
     }
+
 
     return keyboard;
 
