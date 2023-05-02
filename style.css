@@ -21,8 +21,8 @@ li{
     padding: 0px 0;
 }
 .main  {
-    padding: 10px 25px ;
-    background-color: rgb(31, 133, 188);
+    padding: 10px 22px ;
+    background-color: rgb(6, 105, 159);
     
 }
 
@@ -30,7 +30,7 @@ li{
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
-    gap: 15px 10px;
+    gap: 10px 10px;
 
 }
 .liTag {
