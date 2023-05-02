@@ -860,7 +860,12 @@ const dataList = [
 const specialKeyBoard = ["Backquote", "Backspace", "Tab", "Delete", "CapsLock", "Enter",
     "ShiftLeft", "ShiftRight", "ArrowUp", "ArrowLeft", "ArrowDown", "ArrowRight", "ControlLeft", "ControlRight",
     "Win", "AltLeft", "AltRight"];
-
+/* const languages = {
+  true: 'en',
+  false: 'ru'
+} */
+let english = true;
+let russian = !english;
 
 //alert(`Приветствую! Если не сложно, очень прошу сделать ревью через пару дней. Не было возможности приступить к заданию! Благодарю`)
 function createKeyboard(arr){
@@ -914,25 +919,46 @@ function createElement(tagName, className){ // функция создания �
     return tag;
 
 }
-
+// -----------добавление в боди полученного документа из JS
 const virtualKeyboard = createKeyboard(dataList);
-document.body.append(virtualKeyboard); // добавление в боди полученного документа из JS
+document.body.append(virtualKeyboard);
 
-let selected; 
+const input = document.querySelector('.input');
+
+// ----------выделение цветом кнопки при клике мышк;
+let selected;
 const targetTag = document.querySelector('ul');
 //alert (UL) проверка UL
-targetTag.onclick = function (event) {// выделение цветом кнопки при клике мышк;
+targetTag.onclick = function (event) {
   let target = event.target.closest('li');
   if (!target) {return false};
   if (!targetTag.contains(target)){return false};
   highlight(target)
+  alert(target.getAttribute('class'))
 }
 
+// ----------выделение цветом кнопки при нажатии по клавиатуре ;
 document.addEventListener('keydown', function(event) {
-  if(event) {
-    alert (typeof event.code)
-    highlight(event.code.toLowerCase().slice(0, 1) + event.code.slice(1))
-  }
+  const eventTag = (event.code.toLowerCase().slice(0, 1) + event.code.slice(1));
+  //alert(eventTag == "digit1")
+  const elem = document.querySelector(`${('.'+ eventTag)}`);
+  //alert(elem)
+  highlight(elem)
+ // dataList.forEach( elem => {
+  dataList.forEach( function (elem) {
+    if (elem.code.contains(`${('.'+event.code)}`)){
+    alert (true)
+    input.oniput = input.value + dataList.en.keyShiftFalse;
+    }
+  })
+})
+document.addEventListener('keyup', function(event) {
+  const eventTag = (event.code.toLowerCase().slice(0, 1) + event.code.slice(1));
+  //alert(eventTag == "digit1")
+  const elem = document.querySelector(`${('.'+ eventTag)}`);
+  //alert(elem)
+
+  elem.classList.remove('highlight');
 })
 
 function highlight(elem) {
@@ -941,4 +967,9 @@ function highlight(elem) {
   }
   selected = elem;
   selected.classList.add('highlight'); // подсветить новый
+}
+
+//------------функция изменения языка
+function changeLanguage() {
+
 }
