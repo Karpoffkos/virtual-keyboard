@@ -47,6 +47,9 @@ li{
     background-color: rgb(40, 43, 45);
     color: aliceblue;
 }
+.liTag:hover{
+    background-color: rgb(157, 186, 202);
+}
 .keybotton{
     position: absolute;
     top: 10px;
@@ -90,4 +93,8 @@ li{
 }
 .space {
     width: 432px;
+}
+
+.highlight{
+    background-color: rgb(157, 186, 202);
 }

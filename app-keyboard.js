@@ -577,7 +577,7 @@ const dataList = [
         keyShiftFalse: "\\",
       },
       en: {
-        keyShiftTrue: "",
+        keyShiftTrue: "\\",
         keyShiftFalse: "\\",
       },
       typeBtn: "inputBtn",
@@ -861,7 +861,8 @@ const specialKeyBoard = ["Backquote", "Backspace", "Tab", "Delete", "CapsLock", 
     "ShiftLeft", "ShiftRight", "ArrowUp", "ArrowLeft", "ArrowDown", "ArrowRight", "ControlLeft", "ControlRight",
     "Win", "AltLeft", "AltRight"];
 
-alert(`Приветствую! Если не сложно, очень прошу сделать ревью через пару дней. Не было возможности приступить к заданию! Благодарю`)
+
+//alert(`Приветствую! Если не сложно, очень прошу сделать ревью через пару дней. Не было возможности приступить к заданию! Благодарю`)
 function createKeyboard(arr){
     const keyboard = document.createElement('section')
     keyboard.classList.add(listCSS.KEYBOARD);
@@ -907,16 +908,37 @@ function createKeyboard(arr){
 
 }
 
-function createElement(tagName, className){
+function createElement(tagName, className){ // функция создания элемента с классом
     const tag = document.createElement(tagName);
     tag.classList.add(className)
     return tag;
 
 }
 
-
-
-
 const virtualKeyboard = createKeyboard(dataList);
-document.body.append(virtualKeyboard);
+document.body.append(virtualKeyboard); // добавление в боди полученного документа из JS
 
+let selected; 
+const targetTag = document.querySelector('ul');
+//alert (UL) проверка UL
+targetTag.onclick = function (event) {// выделение цветом кнопки при клике мышк;
+  let target = event.target.closest('li');
+  if (!target) {return false};
+  if (!targetTag.contains(target)){return false};
+  highlight(target)
+}
+
+document.addEventListener('keydown', function(event) {
+  if(event) {
+    alert (typeof event.code)
+    highlight(event.code.toLowerCase().slice(0, 1) + event.code.slice(1))
+  }
+})
+
+function highlight(elem) {
+  if (selected) { // убрать существующую подсветку, если есть
+    selected.classList.remove('highlight');
+  }
+  selected = elem;
+  selected.classList.add('highlight'); // подсветить новый
+}
