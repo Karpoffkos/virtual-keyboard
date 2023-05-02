@@ -1,6 +1,9 @@
 body{
     height: 100vh;
 }
+ul{
+    padding-inline-start:0px;
+}
 li{
     list-style: none;
 }
@@ -8,6 +11,8 @@ li{
     padding: 0 10px;
     width: 1260px;
     height: 250px;
+    border: solid 1px rgb(31, 133, 188);
+    border-radius: 6px;
 }
 .keyboard {
     width: 1280px;
@@ -15,20 +20,74 @@ li{
     margin: 0 auto;
     padding: 0px 0;
 }
+.main  {
+    padding: 10px 25px ;
+    background-color: rgb(31, 133, 188);
+    
+}
 
 .ulTag {
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
-    gap: 25px 15px;
+    gap: 15px 10px;
+
 }
 .liTag {
-    border: solid 1px;
-    min-width: 45px;
-    width: fit-content;
-    height: 45px;
-    padding: 14px 5px;
+    position: relative;
+    min-width: 34px;
+    padding: 17px 17px;
+    font-size: 30px;
     text-align: center;
-    font-size: 26px;
+    border: solid 1px;
+    border-radius: 5px;
+    background-color: rgb(222, 235, 242);
+}
+.gray{
+    background-color: rgb(40, 43, 45);
+    color: aliceblue;
+}
+.keybotton{
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    text-align: center;
+    font-size: 18px;
 
+}
+.divSescription{
+    padding: 25px;
+    background-color: rgb(40, 43, 45);
+    color: aliceblue;
+    text-align: center;
+    font-size: 28px;
+}
+
+
+.backspace  {
+    width: 150px;
+}
+.delete {
+    width: 60px;
+}
+.enter {
+    width: 116px;
+}
+.capsLock {
+    width: 150px;
+}
+.shiftLeft {
+    width: 150px;
+}
+.shiftRight {
+    padding: 17px 0;
+    width: 70px;
+}
+
+.controlLeft,
+.controlRight {
+    width: 80px;
+}
+.space {
+    width: 432px;
 }
