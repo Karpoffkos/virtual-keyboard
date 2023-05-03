@@ -577,7 +577,7 @@ const dataList = [
         keyShiftFalse: "\\",
       },
       en: {
-        keyShiftTrue: "",
+        keyShiftTrue: "\\",
         keyShiftFalse: "\\",
       },
       typeBtn: "inputBtn",
@@ -860,15 +860,22 @@ const dataList = [
 const specialKeyBoard = ["Backquote", "Backspace", "Tab", "Delete", "CapsLock", "Enter",
     "ShiftLeft", "ShiftRight", "ArrowUp", "ArrowLeft", "ArrowDown", "ArrowRight", "ControlLeft", "ControlRight",
     "Win", "AltLeft", "AltRight"];
+/* const languages = {
+  true: 'en',
+  false: 'ru'
+} */
+let english = true;
+let russian = !english;
 
-alert(`Приветствую! Если не сложно, очень прошу сделать ревью через пару дней. Не было возможности приступить к заданию! Благодарю`)
+//alert(`Приветствую! Если не сложно, очень прошу сделать ревью через пару дней. Не было возможности приступить к заданию! Благодарю`)
 function createKeyboard(arr){
     const keyboard = document.createElement('section')
     keyboard.classList.add(listCSS.KEYBOARD);
 
     const formTag = createElement('form', listCSS.FORM);
-    const textArea = createElement('input', listCSS.INPUT);
+    const textArea = createElement('textarea', listCSS.INPUT);
     textArea.setAttribute('type', 'text');
+    textArea.setAttribute('autofocus', '')
     formTag.append(textArea);
     keyboard.append(formTag);
 
@@ -907,16 +914,69 @@ function createKeyboard(arr){
 
 }
 
-function createElement(tagName, className){
+function createElement(tagName, className){ // функция создания элемента с классом
     const tag = document.createElement(tagName);
     tag.classList.add(className)
     return tag;
 
 }
-
-
-
-
+// -----------добавление в боди полученного документа из JS
 const virtualKeyboard = createKeyboard(dataList);
 document.body.append(virtualKeyboard);
 
+const input = document.querySelectorAll('.text')
+
+
+// ----------выделение цветом кнопки при клике мышк;
+let selected;
+const targetTag = document.querySelector('ul');
+//alert (UL) проверка UL
+targetTag.onclick = function (event) {
+  let target = event.target.closest('li');
+  if (!target) {return false};
+  if (!targetTag.contains(target)){return false};
+  highlight(target)
+  alert(target.getAttribute('class'))
+}
+
+// ----------выделение цветом кнопки при нажатии по клавиатуре ;
+document.addEventListener('keydown', function(event) {
+  const eventTag = (event.code.toLowerCase().slice(0, 1) + event.code.slice(1));
+  //alert(eventTag == "digit1")
+  const elem = document.querySelector(`${('.'+ eventTag)}`);
+  //alert(elem)
+  highlight(elem)
+
+  //alert (input)
+ 
+ // dataList.forEach( elem => {
+/*   dataList.forEach( function (elem) {
+    if (elem.code.contains(`${('.'+event.code)}`)){
+    alert (true)
+    //input.oniput = input.value + dataList.en.keyShiftFalse;
+    }
+  }) */
+})
+
+// ------------снятие выделения клавиши
+document.addEventListener('keyup', function(event) { 
+  const eventTag = (event.code.toLowerCase().slice(0, 1) + event.code.slice(1));
+  //alert(eventTag == "digit1")
+  const elem = document.querySelector(`${('.'+ eventTag)}`);
+  //alert(elem)
+
+  elem.classList.remove('highlight');
+})
+
+function highlight(elem) { // ФУНКЦИЯ ДОБАВЛЕНИЯ ФЛАГА 
+  if (selected) { // убрать существующую подсветку, если есть
+    selected.classList.remove('highlight');
+  }
+  selected = elem;
+  selected.classList.add('highlight'); // подсветить новый
+}
+
+//------------функция изменения языка
+function changeLanguage() {
+
+}
