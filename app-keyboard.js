@@ -873,8 +873,9 @@ function createKeyboard(arr){
     keyboard.classList.add(listCSS.KEYBOARD);
 
     const formTag = createElement('form', listCSS.FORM);
-    const textArea = createElement('input', listCSS.INPUT);
+    const textArea = createElement('textarea', listCSS.INPUT);
     textArea.setAttribute('type', 'text');
+    textArea.setAttribute('autofocus', '')
     formTag.append(textArea);
     keyboard.append(formTag);
 
@@ -923,7 +924,8 @@ function createElement(tagName, className){ // функция создания �
 const virtualKeyboard = createKeyboard(dataList);
 document.body.append(virtualKeyboard);
 
-const input = document.querySelector('.input');
+const input = document.querySelectorAll('.text')
+
 
 // ----------выделение цветом кнопки при клике мышк;
 let selected;
@@ -944,15 +946,20 @@ document.addEventListener('keydown', function(event) {
   const elem = document.querySelector(`${('.'+ eventTag)}`);
   //alert(elem)
   highlight(elem)
+
+  //alert (input)
+ 
  // dataList.forEach( elem => {
-  dataList.forEach( function (elem) {
+/*   dataList.forEach( function (elem) {
     if (elem.code.contains(`${('.'+event.code)}`)){
     alert (true)
-    input.oniput = input.value + dataList.en.keyShiftFalse;
+    //input.oniput = input.value + dataList.en.keyShiftFalse;
     }
-  })
+  }) */
 })
-document.addEventListener('keyup', function(event) {
+
+// ------------снятие выделения клавиши
+document.addEventListener('keyup', function(event) { 
   const eventTag = (event.code.toLowerCase().slice(0, 1) + event.code.slice(1));
   //alert(eventTag == "digit1")
   const elem = document.querySelector(`${('.'+ eventTag)}`);
@@ -961,7 +968,7 @@ document.addEventListener('keyup', function(event) {
   elem.classList.remove('highlight');
 })
 
-function highlight(elem) {
+function highlight(elem) { // ФУНКЦИЯ ДОБАВЛЕНИЯ ФЛАГА 
   if (selected) { // убрать существующую подсветку, если есть
     selected.classList.remove('highlight');
   }
