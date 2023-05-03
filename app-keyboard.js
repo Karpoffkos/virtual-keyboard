@@ -864,6 +864,7 @@ const specialKeyBoard = ["Backquote", "Backspace", "Tab", "Delete", "CapsLock", 
   true: 'en',
   false: 'ru'
 } */
+let textArea;
 let english = true;
 let russian = !english;
 
@@ -873,9 +874,10 @@ function createKeyboard(arr){
     keyboard.classList.add(listCSS.KEYBOARD);
 
     const formTag = createElement('form', listCSS.FORM);
-    const textArea = createElement('textarea', listCSS.INPUT);
+    textArea = createElement('textarea', listCSS.INPUT);
     textArea.setAttribute('type', 'text');
     textArea.setAttribute('autofocus', '')
+    textArea.setAttribute('tabIndex', '')
     formTag.append(textArea);
     keyboard.append(formTag);
 
@@ -891,8 +893,8 @@ function createKeyboard(arr){
 
     for (let i = 0; i < arr.length; i++){
         const liTag = document.createElement('li');
-        liTag.classList.add(listCSS.LI);
-        liTag.classList.add(arr[i].code.toLowerCase().slice(0, 1)+ arr[i].code.slice(1) );
+        //liTag.classList.add(listCSS.LI);
+        liTag.classList.add(arr[i].code);
         liTag.textContent = arr[i].en.keyShiftFalse;
         const keybotton = document.createElement('div');
         keybotton.classList.add(listCSS.KEYBOTTON);
@@ -935,8 +937,15 @@ targetTag.onclick = function (event) {
   let target = event.target.closest('li');
   if (!target) {return false};
   if (!targetTag.contains(target)){return false};
+  //alert(target.getAttribute('class'))
+  let i = dataList.forEach( function(elem) {
+    if(target.getAttribute('class') == elem.code){
+       textArea.value = textArea.value + elem.en.keyShiftFalse;
+    }
+  })
   highlight(target)
-  alert(target.getAttribute('class'))
+  //alert(target.getAttribute('class'))
+
 }
 
 // ----------выделение цветом кнопки при нажатии по клавиатуре ;
