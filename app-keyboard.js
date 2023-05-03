@@ -986,6 +986,10 @@ function highlight(elem) { // ФУНКЦИЯ ДОБАВЛЕНИЯ ФЛАГА
 }
 
 //------------функция изменения языка
+let englishON = true;
 function changeLanguage() {
+  if (englishON) {
+
+  }
 
 }
