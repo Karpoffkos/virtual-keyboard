@@ -8,7 +8,7 @@ const listCSS = {
     INPUT: "inputTag",
     KEYBOTTON: "keybotton",
     GRAY: "gray",
-    DIVDSCR: "divSescription",
+    DIVDSCR: "divDescription",
 }
 const dataList = [
     {
@@ -860,13 +860,37 @@ const dataList = [
 const specialKeyBoard = ["Backquote", "Backspace", "Tab", "Delete", "CapsLock", "Enter",
     "ShiftLeft", "ShiftRight", "ArrowUp", "ArrowLeft", "ArrowDown", "ArrowRight", "ControlLeft", "ControlRight",
     "Win", "AltLeft", "AltRight"];
-/* const languages = {
-  true: 'en',
-  false: 'ru'
-} */
+
+const keybottomArray = new Array();
+
 let textArea;
-let english = true;
-let russian = !english;
+let ulTag;
+//alert (keybottomArray.length)
+//------------функция изменения языка
+let englishOn = true;
+let russuanOn = !englishOn;
+
+function changeLanguage() {
+  if (englishOn) {
+    englishOn = false;
+    return englishOn;
+  }
+  englishOn = true;
+
+  return englishOn
+}
+
+//------------функция изменения SHIFT
+let shiftOff= true;
+let shiftOn= !shiftOff;
+
+function changeShiftValue() {
+  if (shiftOff) {
+    shiftOff = false;
+    return;
+  }
+  shiftOff = true;
+}
 
 //alert(`Приветствую! Если не сложно, очень прошу сделать ревью через пару дней. Не было возможности приступить к заданию! Благодарю`)
 function createKeyboard(arr){
@@ -884,37 +908,49 @@ function createKeyboard(arr){
     const mainTag = createElement('main', listCSS.MAIN);
     keyboard.append(mainTag);
 
-    const ulTag = createElement('ul', listCSS.UL);
-    const divSescription = createElement('div', listCSS.DIVDSCR);
-    divSescription.textContent = "Переключение языка: ctrl + alt (Windows)";
-
+    ulTag = createElement('ul', listCSS.UL);
+    const divDescription = createElement('div', listCSS.DIVDSCR);
+    divDescription.textContent = "Переключение языка: ctrl + alt (Windows)";
+    
     mainTag.append(ulTag);
-    mainTag.append(divSescription);
+    mainTag.append(divDescription);
+    createKey(arr)
+   
+    return keyboard;
 
+  }
+function createKey(arr){
     for (let i = 0; i < arr.length; i++){
         const liTag = document.createElement('li');
-        //liTag.classList.add(listCSS.LI);
+        if(englishOn && shiftOff){
+          liTag.textContent = arr[i].en.keyShiftFalse;
+        } else if (russuanOn && shiftOff) {
+          liTag.textContent = arr[i].ru.keyShiftFalse;
+        } else if (englishOn && shiftOn) {
+          liTag.textContent = arr[i].en.keyShiftTrue;
+        } else if (russuanOn && shiftOff) {
+          liTag.textContent = arr[i].ru.keyShiftTrue;
+        }
         liTag.classList.add(arr[i].code);
-        liTag.textContent = arr[i].en.keyShiftFalse;
         const keybotton = document.createElement('div');
         keybotton.classList.add(listCSS.KEYBOTTON);
         if(specialKeyBoard.includes(arr[i].code)){
           liTag.classList.add(listCSS.GRAY);
         }
         if(i < 13){
-         keybotton.textContent = arr[i].en.keyShiftTrue;
+          keybotton.textContent = arr[i].en.keyShiftTrue;
         } else if (arr[i].code == "Backslash"){
           keybotton.textContent = arr[i].en.keyShiftTrue;
         }
-
         liTag.append(keybotton);
-        ulTag.append(liTag);
+        keybottomArray.push(liTag);
+        keybottomArray.forEach(function(elem){
+          ulTag.append(elem)
+        })
+        //const ul = document.querySelectorAll('ul');
+        //ul[0].append(liTag);
     }
-
-
-    return keyboard;
-
-}
+  }
 
 function createElement(tagName, className){ // функция создания элемента с классом
     const tag = document.createElement(tagName);
@@ -922,11 +958,11 @@ function createElement(tagName, className){ // функция создания �
     return tag;
 
 }
+
 // -----------добавление в боди полученного документа из JS
 const virtualKeyboard = createKeyboard(dataList);
 document.body.append(virtualKeyboard);
 
-const input = document.querySelectorAll('.text')
 
 
 // ----------выделение цветом кнопки при клике мышк;
@@ -938,7 +974,7 @@ targetTag.onclick = function (event) {
   if (!target) {return false};
   if (!targetTag.contains(target)){return false};
   //alert(target.getAttribute('class'))
-  let i = dataList.forEach( function(elem) {
+  /* let i = */ dataList.forEach( function(elem) {
     if(target.getAttribute('class') == elem.code){
        textArea.value = textArea.value + elem.en.keyShiftFalse;
     }
@@ -950,12 +986,18 @@ targetTag.onclick = function (event) {
 
 // ----------выделение цветом кнопки при нажатии по клавиатуре ;
 document.addEventListener('keydown', function(event) {
-  const eventTag = (event.code.toLowerCase().slice(0, 1) + event.code.slice(1));
-  //alert(eventTag == "digit1")
+  const eventTag = (event.code);
+ // alert(eventTag == 'ShiftLeft')//"проверка нажатия кнопки shift (неважно какой из)
+ // alert(event.shiftKey) // проверка нажатия кнопки shift (неважно какой из)
   const elem = document.querySelector(`${('.'+ eventTag)}`);
   //alert(elem)
   highlight(elem)
-
+  if (eventTag == 'ControlLeft' && event.altKey ){ // код для нажатия клавиш и смены языка
+    keybottomArray.length = 0
+    changeLanguage()
+     // alert(englishOn)
+     createKey(dataList)
+  }
   //alert (input)
  
  // dataList.forEach( elem => {
@@ -969,7 +1011,7 @@ document.addEventListener('keydown', function(event) {
 
 // ------------снятие выделения клавиши
 document.addEventListener('keyup', function(event) { 
-  const eventTag = (event.code.toLowerCase().slice(0, 1) + event.code.slice(1));
+  const eventTag = (event.code);
   //alert(eventTag == "digit1")
   const elem = document.querySelector(`${('.'+ eventTag)}`);
   //alert(elem)
@@ -984,12 +1026,8 @@ function highlight(elem) { // ФУНКЦИЯ ДОБАВЛЕНИЯ ФЛАГА
   selected = elem;
   selected.classList.add('highlight'); // подсветить новый
 }
-
-//------------функция изменения языка
-let englishON = true;
-function changeLanguage() {
-  if (englishON) {
+/*  document.addEventListener('keyDown', function(event){
+  if(event.code == 'ControlLeft'){
 
   }
-
-}
+ }) */
